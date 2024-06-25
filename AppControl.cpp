@@ -439,6 +439,8 @@ void AppControl::displayNextMusic(){
                 音楽再生画面を描画する
 ***********************************************************************/
 void AppControl::displayMusicPlay(){
+    mlcd.fillBackgroundWhite();
+    displayMusicTitle();
     mlcd.displayJpgImageCoordinate(MUSIC_NOWPLAYING_IMG_PATH,MUSIC_NOTICE_X_CRD,MUSIC_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_STOP_IMG_PATH,MUSIC_STOP_X_CRD,MUSIC_STOP_Y_CRD);
 }
