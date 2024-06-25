@@ -12,8 +12,7 @@ AudioFileSourceID3* id3;
 File musicfolder;
 File entry;
 
-void MdMusicPlayer::init()
-{
+void MdMusicPlayer::init(){
 
     SD.begin();
     musicfolder = SD.open("/music");
@@ -25,13 +24,11 @@ void MdMusicPlayer::init()
     }
 }
 
-char* MdMusicPlayer::getTitle()
-{
+char* MdMusicPlayer::getTitle(){
     return (char*)entry.name();
 }
 
-void MdMusicPlayer::selectNextMusic()
-{
+void MdMusicPlayer::selectNextMusic(){
     entry = musicfolder.openNextFile();
     if (!entry) {
         musicfolder.rewindDirectory();
@@ -40,8 +37,7 @@ void MdMusicPlayer::selectNextMusic()
     }
 }
 
-void MdMusicPlayer::prepareMP3()
-{
+void MdMusicPlayer::prepareMP3(){
     file = new AudioFileSourceSD(entry.path());
     id3 = new AudioFileSourceID3(file);
     out = new AudioOutputI2S(0, 1); // Output to builtInDAC
@@ -51,17 +47,14 @@ void MdMusicPlayer::prepareMP3()
     mp3->begin(id3, out);
 }
 
-bool MdMusicPlayer::isRunningMP3()
-{
+bool MdMusicPlayer::isRunningMP3(){
     return mp3->isRunning();
 }
 
-bool MdMusicPlayer::playMP3()
-{
+bool MdMusicPlayer::playMP3(){
     return mp3->loop();
 }
 
-void MdMusicPlayer::stopMP3()
-{
+void MdMusicPlayer::stopMP3(){
     mp3->stop();
 }

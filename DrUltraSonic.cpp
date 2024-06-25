@@ -1,8 +1,7 @@
 #include "DrUltraSonic.h"
 #include <M5Stack.h>
 
-DrUltraSonic::DrUltraSonic(int echo_pin, int trig_pin) 
-{
+DrUltraSonic::DrUltraSonic(int echo_pin, int trig_pin) {
     m_echo_pin = echo_pin;  // echo_pin を m_echo_pin に設定
     m_trig_pin = trig_pin;  // trig_pin を m_trig_pin に設定
 
