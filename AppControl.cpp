@@ -34,73 +34,68 @@ const char* g_str_blue[] = {
     COMMON_BLUE9_IMG_PATH,
 };
 
-void AppControl::setBtnAFlg(bool flg)
-{
+void AppControl::setBtnAFlg(bool flg){
     m_flag_btnA_is_pressed = flg;
 }
 
-void AppControl::setBtnBFlg(bool flg)
-{
+void AppControl::setBtnBFlg(bool flg){
     m_flag_btnB_is_pressed = flg;
 }
 
-void AppControl::setBtnCFlg(bool flg)
-{
+void AppControl::setBtnCFlg(bool flg){
     m_flag_btnC_is_pressed = flg;
 }
 
-void AppControl::setBtnAllFlgFalse()
-{
+void AppControl::setBtnAllFlgFalse(){
     m_flag_btnA_is_pressed = false;
     m_flag_btnB_is_pressed = false;
     m_flag_btnC_is_pressed = false;
 }
 
-State AppControl::getState()
-{
+State AppControl::getState(){
     return m_state;
 }
 
-void AppControl::setState(State state)
-{
+void AppControl::setState(State state){
     m_state = state;
 }
 
-Action AppControl::getAction()
-{
+Action AppControl::getAction(){
     return m_action;
 }
 
-void AppControl::setAction(Action action)
-{
+void AppControl::setAction(Action action){
     m_action = action;
 }
 
-void AppControl::setStateAction(State state, Action action)
-{
+void AppControl::setStateAction(State state, Action action){
     setState(state);
     setAction(action);
 }
 
-FocusState AppControl::getFocusState()
-{
+FocusState AppControl::getFocusState(){
     return m_focus_state;
 }
 
-void AppControl::setFocusState(FocusState fs)
-{
+void AppControl::setFocusState(FocusState fs){
     m_focus_state = fs;
 }
 
-void AppControl::displayTitleInit()//タイトル画面を表示する
-{
+/***********************************************************************
+                            タイトル画面を描画する
+***********************************************************************/
+void AppControl::displayTitleInit(){
     mlcd.displayJpgImage(TITLE_IMG_PATH);
 }
 
-void AppControl::displayMenuInit()
-{
+/***********************************************************************
+                            メニュー画面を初期化して描画する
+***********************************************************************/
+void AppControl::displayMenuInit(){
     mlcd.fillBackgroundWhite();
+    //「熱中症モニタ」のみデフォルトでフォーカス画像に設定
     mlcd.displayJpgImageCoordinate(MENU_WBGT_FOCUS_IMG_PATH,MENU_WBGT_X_CRD,MENU_WBGT_Y_CRD);
+    //他メニューは非フォーカス画像に設定
     mlcd.displayJpgImageCoordinate(MENU_MUSIC_IMG_PATH, MENU_MUSIC_X_CRD, MENU_MUSIC_Y_CRD);
     mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
     mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
@@ -109,8 +104,10 @@ void AppControl::displayMenuInit()
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_DOWN_IMG_PATH, MENU_DOWN_X_CRD, MENU_DOWN_Y_CRD);
 }
 
-void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
-{
+/***********************************************************************
+                            メニュー画面においてフォーカスを移動させる
+***********************************************************************/
+void AppControl::focusChangeImg(FocusState current_state, FocusState next_state){
     //非フォーカス画像に切り替え
     if(current_state == MENU_WBGT){
         mlcd.displayJpgImageCoordinate(MENU_WBGT_IMG_PATH, MENU_WBGT_X_CRD, MENU_WBGT_Y_CRD);
@@ -119,8 +116,7 @@ void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
     }else if(current_state == MENU_MEASURE){
         mlcd.displayJpgImageCoordinate(MENU_MEASURE_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
     }else if(current_state == MENU_DATE){
-        mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
-    }
+        mlcd.displayJpgImageCoordinate(MENU_DATE_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);}
 
     //フォーカス画像に切り替え
     if(next_state == MENU_WBGT){
@@ -130,15 +126,13 @@ void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
     }else if(next_state == MENU_MEASURE){
         mlcd.displayJpgImageCoordinate(MENU_MEASURE_FOCUS_IMG_PATH, MENU_MEASURE_X_CRD, MENU_MEASURE_Y_CRD);
     }else if(next_state == MENU_DATE){
-        mlcd.displayJpgImageCoordinate(MENU_DATE_FOCUS_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);
-    }
-}
+        mlcd.displayJpgImageCoordinate(MENU_DATE_FOCUS_IMG_PATH, MENU_DATE_X_CRD, MENU_DATE_Y_CRD);}}
 
-void AppControl::displayWBGTInit()
-{
-    mwbgt.init();
+/***********************************************************************
+                    熱中症モニタの初期画面を描画する
+***********************************************************************/
+void AppControl::displayWBGTInit(){
     mlcd.fillBackgroundWhite();
-    displayTempHumiIndex();
     //戻るボタンの表示
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,WBGT_BACK_X_CRD,WBGT_BACK_Y_CRD);
     //「温度」表示
@@ -153,21 +147,25 @@ void AppControl::displayWBGTInit()
     mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH,WBGT_HDOT_X_CRD,WBGT_HDOT_Y_CRD);
     //湿度の「%」の表示
     mlcd.displayJpgImageCoordinate(WBGT_PERCENT_IMG_PATH,WBGT_PERCENT_X_CRD,WBGT_PERCENT_Y_CRD);
-}
+    mwbgt.init();
+    displayTempHumiIndex();
+    }
 
-void AppControl::displayTempHumiIndex()
-{
+/***********************************************************************
+                熱中症モニタの画面に温度・湿度・アラートを描画する
+***********************************************************************/
+void AppControl::displayTempHumiIndex(){
     double temperature;
     double humidity;
     WbgtIndex index;
-    mwbgt.getWBGT(&temperature, &humidity, &index);
+    mwbgt.getWBGT(&temperature, &humidity, &index); //引数にアドレス渡しを実行
+
     /***********************************************************************************************
     　　　　　　　　　　　　                    温度表示部分（Temprature）
     ***********************************************************************************************/
     int t2_digit = (int)(temperature / 10) % 10;
     int t1_digit = (int)temperature % 10;
     int t1_deci = (int)(temperature * 10) % 10;
-
     //温度表示（十の位）
     switch(t2_digit){
         case 0:
@@ -200,9 +198,9 @@ void AppControl::displayTempHumiIndex()
         case 9:
             mlcd.displayJpgImageCoordinate(COMMON_ORANGE9_IMG_PATH,WBGT_T2DIGIT_X_CRD,WBGT_T2DIGIT_Y_CRD);
             break;
-        }
+    }
 
-    //温度表示（1の位の数字）
+    //温度表示（一の位）
     switch(t1_digit){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_ORANGE0_IMG_PATH,WBGT_T1DIGIT_X_CRD,WBGT_T1DIGIT_Y_CRD);
@@ -235,7 +233,7 @@ void AppControl::displayTempHumiIndex()
             mlcd.displayJpgImageCoordinate(COMMON_ORANGE9_IMG_PATH,WBGT_T1DIGIT_X_CRD,WBGT_T1DIGIT_Y_CRD);
             break;
         }
-    //温度表示（少数点第一位の数字）
+    //温度表示（少数点第一位）
     switch(t1_deci){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_ORANGE0_IMG_PATH,WBGT_T1DECIMAL_X_CRD,WBGT_T1DECIMAL_Y_CRD);
@@ -310,7 +308,7 @@ void AppControl::displayTempHumiIndex()
             break;
         }
 
-    //湿度表示（1の位の数字）
+    //湿度表示（一の位）
     switch(h1_digit){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,WBGT_H1DIGIT_X_CRD,WBGT_H1DIGIT_Y_CRD);
@@ -344,7 +342,7 @@ void AppControl::displayTempHumiIndex()
             break;
         }
 
-    //湿度表示（少数点第一位の数字）
+    //湿度表示（少数点第一位）
     switch(h1_deci){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,WBGT_H1DECIMAL_X_CRD,WBGT_H1DECIMAL_Y_CRD);
@@ -400,57 +398,82 @@ void AppControl::displayTempHumiIndex()
         }
 }
 
-void AppControl::displayMusicInit()
-{
-    mmplay.prepareMP3();
+/***********************************************************************
+                音楽プレイヤーの画面を初期化して描画する
+***********************************************************************/
+void AppControl::displayMusicInit(){
+    mlcd.fillBackgroundWhite();
+    mmplay.init();
+    displayMusicStop();
+    displayMusicTitle();
 }
 
-void AppControl::displayMusicStop()
-{
-    mlcd.fillBackgroundWhite();
+/***********************************************************************
+                音楽停止画面を描画する
+***********************************************************************/
+void AppControl::displayMusicStop(){
     mlcd.displayJpgImageCoordinate(MUSIC_NOWSTOPPING_IMG_PATH,MUSIC_NOTICE_X_CRD,MUSIC_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,MUSIC_BACK_X_CRD,MUSIC_BACK_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_PLAY_IMG_PATH,MUSIC_PLAY_X_CRD,MUSIC_PLAY_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_NEXT_IMG_PATH,MUSIC_NEXT_X_CRD,MUSIC_NEXT_Y_CRD);
 }
 
-void AppControl::displayMusicTitle()
-{
+/***********************************************************************
+                音楽ファイルのファイル名を描画する
+***********************************************************************/
+void AppControl::displayMusicTitle(){
     mlcd.displayText("                     ",MUSIC_TITLE_X_CRD,MUSIC_TITLE_Y_CRD); //表示切り替え時の残像消し用
     mlcd.displayText(mmplay.getTitle(),MUSIC_TITLE_X_CRD,MUSIC_TITLE_Y_CRD);
 }
 
-void AppControl::displayNextMusic()
-{
-    setBtnAllFlgFalse();
+/***********************************************************************
+                次の音楽ファイル開き、そのファイル名を描画する
+***********************************************************************/
+void AppControl::displayNextMusic(){
     mmplay.selectNextMusic();
     displayMusicTitle();
 }
 
-void AppControl::displayMusicPlay()
-{
+/***********************************************************************
+                音楽再生画面を描画する
+***********************************************************************/
+void AppControl::displayMusicPlay(){
     mlcd.fillBackgroundWhite();
+    displayMusicTitle();
     mlcd.displayJpgImageCoordinate(MUSIC_NOWPLAYING_IMG_PATH,MUSIC_NOTICE_X_CRD,MUSIC_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_STOP_IMG_PATH,MUSIC_STOP_X_CRD,MUSIC_STOP_Y_CRD);
 }
 
-void AppControl::displayMeasureInit()
-{
+/***********************************************************************
+                距離測定画面の初期画面を描画する
+***********************************************************************/
+void AppControl::displayMeasureInit(){
     mlcd.fillBackgroundWhite();
     mlcd.displayJpgImageCoordinate(MEASURE_NOTICE_IMG_PATH,MEASURE_NOTICE_X_CRD,MEASURE_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,MEASURE_BACK_X_CRD,MEASURE_BACK_Y_CRD);
+    mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH,MEASURE_DOT_X_CRD,MEASURE_DOT_Y_CRD);
+    mlcd.displayJpgImageCoordinate(MEASURE_CM_IMG_PATH,MEASURE_CM_X_CRD,MEASURE_CM_Y_CRD);
+    displayMeasureDistance();
+}
 
+/***********************************************************************
+                測定した距離を描画する
+***********************************************************************/
+void AppControl::displayMeasureDistance(){
     //距離(cm)を取得
     double distance = mmdist.getDistance();
     //コンマ表示
     mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH,MEASURE_DOT_X_CRD,MEASURE_DOT_Y_CRD);
-
     //「cm」表示
     mlcd.displayJpgImageCoordinate(MEASURE_CM_IMG_PATH,MEASURE_CM_X_CRD,MEASURE_CM_Y_CRD);
 
-    //距離表示（100の位の数字）
-    int digit3 = (int)(distance / 100) % 10;
-    switch(digit3){
+    int d3_digit = (int)(distance / 100) % 10;
+    int d2_digit = (int)(distance / 10) % 10;
+    int d1_digit = (int)distance % 10;
+    int d1_deci = (int)(distance * 10) % 10;
+
+    //距離表示（百の位）
+    switch(d3_digit){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
             break;
@@ -483,9 +506,8 @@ void AppControl::displayMeasureInit()
             break;
     }
 
-    //距離表示（10の位の数字）
-    int digit2 = (int)(distance / 10) % 10;
-    switch(digit2){
+    //距離表示（十の位の数字）
+    switch(d2_digit){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
             break;
@@ -518,9 +540,8 @@ void AppControl::displayMeasureInit()
             break;
         }
 
-    //距離表示（1の位の数字）
-    int digit1 = (int)(distance) % 10;
-    switch(digit1){
+    //距離表示（一の位）
+    switch(d1_digit){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
             break;
@@ -552,9 +573,8 @@ void AppControl::displayMeasureInit()
             mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
             break;
     }
-    //距離表示（少数点第一位の数字）
-    int decimal = (int)(distance * 10) % 10;
-    switch(decimal){
+    //距離表示（少数点第一位）
+    switch(d1_deci){
         case 0:
             mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
             break;
@@ -588,179 +608,30 @@ void AppControl::displayMeasureInit()
     }
 }
 
-void AppControl::displayMeasureDistance()
-{
-    //距離(cm)を取得
-    double distance = mmdist.getDistance();
-    //コンマ表示
-    mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH,MEASURE_DOT_X_CRD,MEASURE_DOT_Y_CRD);
-
-    //「cm」表示
-    mlcd.displayJpgImageCoordinate(MEASURE_CM_IMG_PATH,MEASURE_CM_X_CRD,MEASURE_CM_Y_CRD);
-
-    int digit3 = (int)(distance / 100) % 10;
-    int digit2 = (int)(distance / 10) % 10;
-    int digit1 = (int)distance % 10;
-    int decimal = (int)(distance * 10) % 10;
-
-    //距離表示（100の位の数字）
-    
-    switch(digit3){
-        case 0:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 1:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 2:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 3:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 4:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 5:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 6:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 7:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 8:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-        case 9:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH,MEASURE_DIGIT3_X_CRD,MEASURE_DIGIT3_Y_CRD);
-            break;
-    }
-
-    //距離表示（10の位の数字）
-    switch(digit2){
-        case 0:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 1:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 2:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 3:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 4:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 5:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 6:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 7:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 8:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        case 9:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH,MEASURE_DIGIT2_X_CRD,MEASURE_DIGIT2_Y_CRD);
-            break;
-        }
-
-    //距離表示（1の位の数字）
-    switch(digit1){
-        case 0:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 1:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 2:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 3:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 4:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 5:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 6:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 7:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 8:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-        case 9:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH,MEASURE_DIGIT1_X_CRD,MEASURE_DIGIT1_Y_CRD);
-            break;
-    }
-    //距離表示（少数点第一位の数字）
-    switch(decimal){
-        case 0:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE0_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 1:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE1_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 2:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE2_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 3:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE3_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 4:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE4_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 5:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE5_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 6:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE6_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 7:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE7_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 8:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE8_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-        case 9:
-            mlcd.displayJpgImageCoordinate(COMMON_BLUE9_IMG_PATH,MEASURE_DECIMAL_X_CRD,MEASURE_DECIMAL_Y_CRD);
-            break;
-    }
-}
-
-void AppControl::displayDateInit()
-{
+/***********************************************************************
+                時刻表示画面の初期画面を描画する
+***********************************************************************/
+void AppControl::displayDateInit(){
     mlcd.fillBackgroundWhite();
     mlcd.displayJpgImageCoordinate(DATE_NOTICE_IMG_PATH,DATE_NOTICE_X_CRD,DATE_NOTICE_Y_CRD);
-    mlcd.displayDateText(mdtime.readDate(),DATE_YYYYMMDD_X_CRD,DATE_YYYYMMDD_Y_CRD);
-    mlcd.displayDateText(mdtime.readTime(),DATE_HHmmSS_X_CRD,DATE_HHmmSS_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,DATE_BACK_X_CRD,DATE_BACK_Y_CRD);
+    displayDateUpdate();
 
 }
 
-void AppControl::displayDateUpdate()
-{
+/***********************************************************************
+                現在の日時を描画する
+***********************************************************************/
+void AppControl::displayDateUpdate(){
     mlcd.displayDateText(mdtime.readDate(),DATE_YYYYMMDD_X_CRD,DATE_YYYYMMDD_Y_CRD);
     mlcd.displayDateText(mdtime.readTime(),DATE_HHmmSS_X_CRD,DATE_HHmmSS_Y_CRD);
-    delay(100);
 }
 
-void AppControl::controlApplication()
-{
+/***********************************************************************
+                メニュー画面で機能を選択し、その機能と画面を呼び出す。
+***********************************************************************/
+void AppControl::controlApplication(){
     while (1) {
-
         switch (getState()) {
         case TITLE:
             switch (getAction()) {
@@ -773,9 +644,6 @@ void AppControl::controlApplication()
                 */
                 displayTitleInit();
                 setStateAction(TITLE,DO);
-                mmplay.init();
-                
-                
                 break;
 
             case DO:
@@ -797,7 +665,6 @@ void AppControl::controlApplication()
             break;
 
         case MENU:
-
             switch (getAction()) {
             case ENTRY:
                 displayMenuInit();
@@ -828,6 +695,7 @@ void AppControl::controlApplication()
                             break;
                     }
                 }
+                
                 /*MENU画面で「↓」ボタン押下時の挙動*/
                 if(m_flag_btnC_is_pressed){
                     setBtnAllFlgFalse();
@@ -861,19 +729,22 @@ void AppControl::controlApplication()
                 mlcd.clearDisplay();
                 switch(getFocusState()){
                     case MENU_WBGT:
+                        displayWBGTInit();
                         setStateAction(WBGT,ENTRY);
                         break;
                     case MENU_MUSIC:
+                        displayMusicInit();
                         setStateAction(MUSIC_STOP,ENTRY);
                         break;
                     case MENU_MEASURE:
+                        displayMeasureInit();
                         setStateAction(MEASURE,ENTRY);
                         break;
                     case MENU_DATE:
+                        displayDateInit();
                         setStateAction(DATE,ENTRY);
                         break;
                 }
-
             default:
                 break;
             }
@@ -882,11 +753,11 @@ void AppControl::controlApplication()
         case WBGT:
             switch (getAction()) {
             case ENTRY:
-                displayWBGTInit();
                 setStateAction(WBGT,DO);
                 break;
             case DO:
                 displayTempHumiIndex();
+                delay(100); //シーケンス図（スライド6）より
                 if(m_flag_btnB_is_pressed){
                     setBtnAllFlgFalse();
                     setStateAction(WBGT,EXIT);
@@ -905,7 +776,6 @@ void AppControl::controlApplication()
             switch (getAction()) {
             case ENTRY:
                 displayMusicStop();
-                displayMusicTitle();
                 setStateAction(MUSIC_STOP,DO);
                 break;
             case DO:
@@ -916,6 +786,7 @@ void AppControl::controlApplication()
                     setStateAction(MUSIC_STOP,EXIT);
                 }
                 if(m_flag_btnC_is_pressed){
+                    setBtnAllFlgFalse();
                     displayNextMusic();
                 }
                 break;
@@ -936,45 +807,38 @@ void AppControl::controlApplication()
             break;
 
         case MUSIC_PLAY:
-
             switch (getAction()) {
             case ENTRY:
+                mmplay.prepareMP3();
                 displayMusicPlay();
-                displayMusicTitle();
-                displayMusicInit();
                 setStateAction(MUSIC_PLAY,DO);
                 break;
-
             case DO:
                 mmplay.playMP3();
-                if(m_flag_btnA_is_pressed){
+                if(m_flag_btnA_is_pressed || !mmplay.playMP3()){
+                    mmplay.stopMP3();
                     setBtnAllFlgFalse();
-                    if(mmplay.isRunningMP3()){
-                        mmplay.stopMP3();
-                    }
                     setStateAction(MUSIC_PLAY,EXIT);
                 }
                 break;
             case EXIT:
                 setStateAction(MUSIC_STOP,ENTRY);
                 break;
-
             default:
                 break;
             }
 
             break;
-
         case MEASURE:
 
             switch (getAction()) {
             case ENTRY:
-                displayMeasureInit();
                 setStateAction(MEASURE,DO);
                 break;
 
             case DO:
                 displayMeasureDistance();
+                delay(250); //シーケンス図（スライド9）より
                 if(m_flag_btnB_is_pressed){
                     setBtnAllFlgFalse();
                     setStateAction(MEASURE,EXIT);
@@ -996,12 +860,12 @@ void AppControl::controlApplication()
 
             switch (getAction()) {
             case ENTRY:
-                displayDateInit();
                 setStateAction(DATE,DO);
                 break;
 
             case DO:
                 displayDateUpdate();
+                delay(100); //シーケンス図（スライド10）より
                 if(m_flag_btnB_is_pressed){
                     setBtnAllFlgFalse();
                     setStateAction(DATE,EXIT);

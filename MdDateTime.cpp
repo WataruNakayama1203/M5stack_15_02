@@ -1,13 +1,11 @@
 #include "MdDateTime.h"
 #include <Arduino.h>
 
-MdDateTime::MdDateTime()
-{
+MdDateTime::MdDateTime(){
     Serial2.begin(9600);
 }
 
-String MdDateTime::readDate()
-{
+String MdDateTime::readDate(){
     int i = 0;
     char c = 0;
     while (Serial2.available() > 0) {
@@ -20,8 +18,7 @@ String MdDateTime::readDate()
     return String(date);
 }
 
-String MdDateTime::readTime()
-{
+String MdDateTime::readTime(){
     int i = 0;
     char c = 0;
     while (Serial2.available() > 0) {

@@ -84,28 +84,20 @@
 // MENU jpg image coordinate
 #define MENU_WBGT_X_CRD 0
 #define MENU_WBGT_Y_CRD 0
-
 #define MENU_MUSIC_X_CRD 0
 #define MENU_MUSIC_Y_CRD 50
-
 #define MENU_MEASURE_X_CRD 0
 #define MENU_MEASURE_Y_CRD 100
-
 #define MENU_DATE_X_CRD 0
 #define MENU_DATE_Y_CRD 150
-
 #define MENU_UP_X_CRD 0
 #define MENU_UP_Y_CRD 200
-
 #define MENU_DECIDE_X_CRD 120
 #define MENU_DECIDE_Y_CRD 200
-
 #define MENU_DOWN_X_CRD 240
 #define MENU_DOWN_Y_CRD 200
 
 // WBGT jpg image coordinate
-
-//温度表示用
 #define WBGT_TEMPERATURE_X_CRD 0
 #define WBGT_TEMPERATURE_Y_CRD 0
 #define WBGT_T2DIGIT_X_CRD 120
@@ -118,8 +110,6 @@
 #define WBGT_T1DECIMAL_Y_CRD 0
 #define WBGT_DEGREE_X_CRD 253
 #define WBGT_DEGREE_Y_CRD 0
-
-//湿度表示用
 #define WBGT_HUMIDITY_X_CRD 0
 #define WBGT_HUMIDITY_Y_CRD 50
 #define WBGT_H2DIGIT_X_CRD 120
@@ -132,16 +122,10 @@
 #define WBGT_H1DECIMAL_Y_CRD 50
 #define WBGT_PERCENT_X_CRD 253
 #define WBGT_PERCENT_Y_CRD 50
-
-//アラート表示用
 #define WBGT_NOTICE_X_CRD 0
 #define WBGT_NOTICE_Y_CRD 100
-
-//戻るボタン用
 #define WBGT_BACK_X_CRD 120
 #define WBGT_BACK_Y_CRD 200
-
-// Music jpg image coordinate
 #define MUSIC_NOTICE_X_CRD 0
 #define MUSIC_NOTICE_Y_CRD 0
 #define MUSIC_TITLE_X_CRD 10
@@ -158,10 +142,8 @@
 // Measure jpg image coordinate
 #define MEASURE_NOTICE_X_CRD 0
 #define MEASURE_NOTICE_Y_CRD 0
-
 #define MEASURE_BACK_X_CRD 120
 #define MEASURE_BACK_Y_CRD 200
-
 #define MEASURE_DIGIT3_X_CRD 10
 #define MEASURE_DIGIT3_Y_CRD 100
 #define MEASURE_DIGIT2_X_CRD 53

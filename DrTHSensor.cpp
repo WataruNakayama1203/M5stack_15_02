@@ -3,16 +3,14 @@
 #include <Wire.h>
 
 // 初期化処理
-void DrTHSensor::init()
-{
+void DrTHSensor::init(){
     Wire.begin();
     delay(100);
     initAesht3x();
 }
 
 // Ae-sht3xの初期化処理
-void DrTHSensor::initAesht3x()
-{
+void DrTHSensor::initAesht3x(){
     Wire.beginTransmission(SHT31_ADDR); // I2Cスレーブ「Arduino Uno」のデータ送信開始
     Wire.write(SOFT_RESET_MSB); // ソフトリセットMSB
     Wire.write(SOFT_RESET_LSB); // ソフトリセットLSB
@@ -26,8 +24,7 @@ void DrTHSensor::initAesht3x()
     delay(100);
 }
 
-void DrTHSensor::getTempHumi(double* temperature, double* humidity)
-{
+void DrTHSensor::getTempHumi(double* temperature, double* humidity){
     // 変数宣言
     unsigned int dac[6];
     unsigned int t, h;
