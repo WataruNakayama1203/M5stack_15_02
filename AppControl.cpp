@@ -133,8 +133,6 @@ void AppControl::focusChangeImg(FocusState current_state, FocusState next_state)
 ***********************************************************************/
 void AppControl::displayWBGTInit(){
     mlcd.fillBackgroundWhite();
-    mwbgt.init();
-    displayTempHumiIndex();
     //戻るボタンの表示
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,WBGT_BACK_X_CRD,WBGT_BACK_Y_CRD);
     //「温度」表示
@@ -149,6 +147,8 @@ void AppControl::displayWBGTInit(){
     mlcd.displayJpgImageCoordinate(COMMON_BLUEDOT_IMG_PATH,WBGT_HDOT_X_CRD,WBGT_HDOT_Y_CRD);
     //湿度の「%」の表示
     mlcd.displayJpgImageCoordinate(WBGT_PERCENT_IMG_PATH,WBGT_PERCENT_X_CRD,WBGT_PERCENT_Y_CRD);
+    mwbgt.init();
+    displayTempHumiIndex();
     }
 
 /***********************************************************************
@@ -403,7 +403,9 @@ void AppControl::displayTempHumiIndex(){
                 音楽プレイヤーの画面を初期化して描画する
 ***********************************************************************/
 void AppControl::displayMusicInit(){
+    mlcd.fillBackgroundWhite();
     mmplay.init();
+    displayMusicStop();
     displayMusicTitle();
 }
 
@@ -411,8 +413,6 @@ void AppControl::displayMusicInit(){
                 音楽停止画面を描画する
 ***********************************************************************/
 void AppControl::displayMusicStop(){
-    mlcd.fillBackgroundWhite();
-    displayMusicTitle();
     mlcd.displayJpgImageCoordinate(MUSIC_NOWSTOPPING_IMG_PATH,MUSIC_NOTICE_X_CRD,MUSIC_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_BACK_IMG_PATH,MUSIC_BACK_X_CRD,MUSIC_BACK_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_PLAY_IMG_PATH,MUSIC_PLAY_X_CRD,MUSIC_PLAY_Y_CRD);
@@ -439,9 +439,6 @@ void AppControl::displayNextMusic(){
                 音楽再生画面を描画する
 ***********************************************************************/
 void AppControl::displayMusicPlay(){
-    mmplay.prepareMP3();
-    mlcd.fillBackgroundWhite();
-    displayMusicTitle();
     mlcd.displayJpgImageCoordinate(MUSIC_NOWPLAYING_IMG_PATH,MUSIC_NOTICE_X_CRD,MUSIC_NOTICE_Y_CRD);
     mlcd.displayJpgImageCoordinate(COMMON_BUTTON_STOP_IMG_PATH,MUSIC_STOP_X_CRD,MUSIC_STOP_Y_CRD);
 }
@@ -697,6 +694,7 @@ void AppControl::controlApplication(){
                             break;
                     }
                 }
+                
                 /*MENU画面で「↓」ボタン押下時の挙動*/
                 if(m_flag_btnC_is_pressed){
                     setBtnAllFlgFalse();
@@ -810,16 +808,15 @@ void AppControl::controlApplication(){
         case MUSIC_PLAY:
             switch (getAction()) {
             case ENTRY:
+                mmplay.prepareMP3();
                 displayMusicPlay();
                 setStateAction(MUSIC_PLAY,DO);
                 break;
             case DO:
                 mmplay.playMP3();
-                if(m_flag_btnA_is_pressed){
+                if(m_flag_btnA_is_pressed || !mmplay.playMP3()){
+                    mmplay.stopMP3();
                     setBtnAllFlgFalse();
-                    if(mmplay.isRunningMP3()){
-                        mmplay.stopMP3();
-                    }
                     setStateAction(MUSIC_PLAY,EXIT);
                 }
                 break;
