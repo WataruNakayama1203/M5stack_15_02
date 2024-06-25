@@ -166,7 +166,6 @@ void AppControl::displayTempHumiIndex(){
     int t2_digit = (int)(temperature / 10) % 10;
     int t1_digit = (int)temperature % 10;
     int t1_deci = (int)(temperature * 10) % 10;
-
     //温度表示（十の位）
     switch(t2_digit){
         case 0:
