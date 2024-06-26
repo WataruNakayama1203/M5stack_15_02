@@ -167,6 +167,7 @@
 #define DATE_BACK_X_CRD 120
 #define DATE_BACK_Y_CRD 200 
 
+
 typedef enum {
     TITLE,
     MENU,
@@ -174,7 +175,14 @@ typedef enum {
     MUSIC_STOP,
     MUSIC_PLAY,
     MEASURE,
-    DATE
+    DATE,
+    /*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓追加課題用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
+    HIGH_AND_LOW_TITLE,
+    HIGH_AND_LOW_BATTLE,
+    HIGH_AND_LOW_WIN,
+    HIGH_AND_LOW_LOSE,
+    HIGH_AND_LOW_RECORD
+    /*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑追加課題用↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/
 } State;
 
 typedef enum {
@@ -197,3 +205,83 @@ typedef enum {
     HIGH_ALERT,
     DANGER
 } WbgtIndex;
+
+/*↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓追加課題用↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓*/
+//jpg image path(HIGH AND LOW )
+
+#define HIGHANDLOW_TITLE_IMG_PATH "/images/trump/title.jpg"
+#define HIGHANDLOW_BUTTON_START_PATH "/images/trump/start.jpg"
+#define HIGHANDLOW_BUTTON_RESULT_PATH "/images/trump/record.jpg"
+#define HIGHANDLOW_BUTTON_HIGH_PATH "/images/trump/high.jpg"
+#define HIGHANDLOW_BUTTON_LOW_PATH "/images/trump/low.jpg"
+#define HIGHANDLOW_BUTTON_RETRY_PATH "/images/trump/onemore.jpg"
+#define HIGHANDLOW_TEXT_QUESTION_PATH "/images/trump/highandlow.jpg"
+#define HIGHANDLOW_TEXT_WIN_PATH "/images/trump/win.jpg"
+#define HIGHANDLOW_TEXT_LOSE_PATH "/images/trump/lose.jpg"
+#define HIGHANDLOW_HEART1_PATH "/images/trump/heart/heart1.jpg"
+#define HIGHANDLOW_HEART2_PATH "/images/trump/heart/heart2.jpg"
+#define HIGHANDLOW_HEART3_PATH "/images/trump/heart/heart3.jpg"
+#define HIGHANDLOW_HEART4_PATH "/images/trump/heart/heart4.jpg"
+#define HIGHANDLOW_HEART5_PATH "/images/trump/heart/heart5.jpg"
+#define HIGHANDLOW_HEART6_PATH "/images/trump/heart/heart6.jpg"
+#define HIGHANDLOW_HEART7_PATH "/images/trump/heart/heart7.jpg"
+#define HIGHANDLOW_HEART8_PATH "/images/trump/heart/heart8.jpg"
+#define HIGHANDLOW_HEART9_PATH "/images/trump/heart/heart9.jpg"
+#define HIGHANDLOW_SPADE1_PATH "/images/trump/spade/spade1.jpg"
+#define HIGHANDLOW_SPADE2_PATH "/images/trump/spade/spade2.jpg"
+#define HIGHANDLOW_SPADE3_PATH "/images/trump/spade/spade3.jpg"
+#define HIGHANDLOW_SPADE4_PATH "/images/trump/spade/spade4.jpg"
+#define HIGHANDLOW_SPADE5_PATH "/images/trump/spade/spade5.jpg"
+#define HIGHANDLOW_SPADE6_PATH "/images/trump/spade/spade6.jpg"
+#define HIGHANDLOW_SPADE7_PATH "/images/trump/spade/spade7.jpg"
+#define HIGHANDLOW_SPADE8_PATH "/images/trump/spade/spade8.jpg"
+#define HIGHANDLOW_SPADE9_PATH "/images/trump/spade/spade9.jpg"
+#define HIGHANDLOW_CARDBACK_PATH "/images/trump/back.jpg"
+
+//High and Low jpg image coordinate
+#define HIGHANDLOW_TITLE_X_CRD 0
+#define HIGHANDLOW_TITLE_Y_CRD 0
+#define HIGHANDLOW_START_X_CRD 0
+#define HIGHANDLOW_START_Y_CRD 200
+#define HIGHANDLOW_BACK_X_CRD 120
+#define HIGHANDLOW_BACK_Y_CRD 200
+#define HIGHANDLOW_RESULT_X_CRD 240
+#define HIGHANDLOW_RESULT_Y_CRD 200
+#define HIGHANDLOW_LEFTCARD_X_CRD 30
+#define HIGHANDLOW_LEFTCARD_Y_CRD 0
+#define HIGHANDLOW_RIGHTCARD_X_CRD 209
+#define HIGHANDLOW_RIGHTCARD_Y_CRD 0
+#define HIGHANDLOW_HIGH_X_CRD 0
+#define HIGHANDLOW_HIGH_Y_CRD 200
+#define HIGHANDLOW_LOW_X_CRD 240
+#define HIGHANDLOW_LOW_Y_CRD 200
+#define HIGHANDLOW_RETRY_X_CRD 0
+#define HIGHANDLOW_RETRY_Y_CRD 200
+#define HIGHANDLOW_HIGHANDLOW_X_CRD 10	
+#define HIGHANDLOW_HIGHANDLOW_Y_CRD 135
+#define HIGHANDLOW_RESULT_WIN_X_CRD 80
+#define HIGHANDLOW_RESULT_WIN_Y_CRD 135
+#define HIGHANDLOW_RESULT_LOSE_X_CRD 100
+#define HIGHANDLOW_RESULT_LOSE_Y_CRD 135
+#define HIGHANDLOW_RESULT_TEXT_X_CRD 0
+#define HIGHANDLOW_RESULT_TEXT_Y_CRD 0
+
+typedef enum{
+    Mode_A,
+    Mode_B,
+    Mode_C,
+    Mode_D,
+    Mode_E
+}Mode;
+
+typedef enum{
+    ANS_HIGH,
+    ANS_LOW
+}UserAns;
+
+typedef enum{
+    WIN,
+    LOSE
+}BattleResult;
+
+/*↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑追加課題用↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑*/

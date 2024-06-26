@@ -7,6 +7,7 @@
 #include "MdMeasureDistance.h"
 #include "MdMusicPlayer.h"
 #include "MdWBGTMonitor.h"
+#include "MdHighAndLow.h"
 //
 class AppControl // classの定義
 {
@@ -18,6 +19,9 @@ private: // privateはクラス内からしかアクセスできない
     /* State Machine */
     State m_state = TITLE;
     Action m_action = ENTRY;
+    Mode m_mode = Mode_A;
+    UserAns m_user_ans = ANS_HIGH;
+    BattleResult m_battle_result = WIN;
 
     /* GUI State */
     FocusState m_focus_state = MENU_WBGT;
@@ -50,4 +54,16 @@ public: // publicはどこからでもアクセス可能
     void displayDateInit();
     void displayDateUpdate();
     void controlApplication();
+
+    Mode getMode();
+    void setMode(Mode mode);
+    UserAns getUserAns();
+    void setUserAns(UserAns UserAns);
+    void putBattleResult(char  winCount, char reCordcount);
+    void displayHighAndLowInit();
+    void displayHighAndLowTitle();
+    void displayHighAndLowBattle(char leftAnswer, char rightAnswer);
+    void displayHighAndLowResult();
+    void displayHighAndLowWin(char leftAns, char rightAns);
+    void displayHighAndLowLose(char leftAns, char rightAns);
 };
